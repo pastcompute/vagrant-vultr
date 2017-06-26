@@ -20,8 +20,13 @@ module VagrantPlugins
           hostname = env[:machine].provider_config.hostname
           label    = env[:machine].provider_config.label
           snapshot = env[:machine].provider_config.snapshot
+          ssh_key_name = env[:machine].provider_config.ssh_key_name
 		  enable_ipv6 = env[:machine].provider_config.enable_ipv6
 		  enable_private_network = env[:machine].provider_config.enable_private_network
+
+          if ssh_key_name == nil
+            ssh_key_name = Action::SetupSSHKey::NAME
+          end
 
           @logger.info "Creating server with:"
           @logger.info "  -- Region: #{region}"
@@ -32,6 +37,7 @@ module VagrantPlugins
           @logger.info "  -- Enable Private Network: #{enable_private_network}"
           @logger.info "  -- Hostname: #{hostname}"
           @logger.info "  -- Label: #{label}"
+          @logger.info "  -- SSH Key Name: #{ssh_key_name}"
 
           attributes = {
             region: region,
@@ -42,8 +48,9 @@ module VagrantPlugins
             snapshot: snapshot,
             enable_ipv6: enable_ipv6,
             enable_private_network: enable_private_network,
-            ssh_key_name: Action::SetupSSHKey::NAME
+            ssh_key_name: ssh_key_name
           }
+
           @machine.id = @client.create_server(attributes)
 
           env[:ui].info 'Waiting for subcription to become active...'
