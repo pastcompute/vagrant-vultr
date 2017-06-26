@@ -5,6 +5,8 @@ module VagrantPlugins
       attr_accessor :region
       attr_accessor :os
       attr_accessor :snapshot
+      attr_accessor :hostname
+      attr_accessor :label
       attr_accessor :plan
       attr_accessor :enable_ipv6
       attr_accessor :enable_private_network
@@ -14,6 +16,8 @@ module VagrantPlugins
 
       def initialize
         @token = UNSET_VALUE
+        @label = UNSET_VALUE
+        @hostname = UNSET_VALUE
         @region = UNSET_VALUE
         @os = UNSET_VALUE
         @snapshot = UNSET_VALUE
@@ -25,6 +29,8 @@ module VagrantPlugins
       def finalize!
         @token = ENV['VULTR_TOKEN'] if @token == UNSET_VALUE
         @region = 'Seattle' if @region == UNSET_VALUE
+        @label = nil if @label == UNSET_VALUE
+        @hostname = nil if @hostname == UNSET_VALUE
         @os = 'Ubuntu 14.04 x64' if @os == UNSET_VALUE && @snapshot == UNSET_VALUE
         @plan = '768 MB RAM,15 GB SSD,1.00 TB BW' if @plan == UNSET_VALUE
         @snapshot = nil if @snapshot == UNSET_VALUE

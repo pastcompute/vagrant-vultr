@@ -41,6 +41,12 @@ module VagrantPlugins
             enable_ipv6: attributes[:enable_ipv6],
             enable_private_network: attributes[:enable_private_network]
           }
+          if attributes[:label] != nil
+            params.merge!(label: attributes[:label])
+          end
+          if attributes[:hostname] != nil
+            params.merge!(label: attributes[:hostname])
+          end
 
           if attributes[:snapshot]
             params.merge!(OSID: os_id('Snapshot'), SNAPSHOTID: attributes[:snapshot])

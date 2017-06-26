@@ -17,6 +17,8 @@ module VagrantPlugins
           region   = env[:machine].provider_config.region
           plan     = env[:machine].provider_config.plan
           os       = env[:machine].provider_config.os
+          hostname = env[:machine].provider_config.hostname
+          label    = env[:machine].provider_config.label
           snapshot = env[:machine].provider_config.snapshot
 		  enable_ipv6 = env[:machine].provider_config.enable_ipv6
 		  enable_private_network = env[:machine].provider_config.enable_private_network
@@ -28,11 +30,15 @@ module VagrantPlugins
           @logger.info "  -- Snapshot: #{snapshot}"
           @logger.info "  -- Enable IPv6: #{enable_ipv6}"
           @logger.info "  -- Enable Private Network: #{enable_private_network}"
+          @logger.info "  -- Hostname: #{hostname}"
+          @logger.info "  -- Label: #{label}"
 
           attributes = {
             region: region,
             os: os,
             plan: plan,
+            hostname: hostname,
+            label: label,
             snapshot: snapshot,
             enable_ipv6: enable_ipv6,
             enable_private_network: enable_private_network,
